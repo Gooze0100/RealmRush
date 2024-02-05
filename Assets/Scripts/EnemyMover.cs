@@ -6,48 +6,78 @@ using UnityEngine;
 [RequireComponent(typeof(Enemy))]
 public class EnemyMover : MonoBehaviour
 {
-    [SerializeField] List<Waypoint> path = new List<Waypoint>();
+    // [SerializeField] List<Tile> path = new List<Tile>();
+    List<Node> path = new List<Node>();
     // [SerializeField] float waitTime = 1f;
     [SerializeField][Range(0f, 5f)] float speed = 1f;
 
     Enemy enemy;
+    GridManager gridManager;
+    Pathfinder pathfinder;
 
     // void Start()
     void OnEnable()
     {
-        FindPath();
         ReturnToStart();
-        StartCoroutine(FollowPath());
+        // RecalculatePath();
+        RecalculatePath(true);
+        // ReturnToStart();
+        // StartCoroutine(FollowPath());
     }
 
-    void Start()
+    // void Start()
+    void Awake()
     {
         enemy = FindObjectOfType<Enemy>();
+        gridManager = FindObjectOfType<GridManager>();
+        pathfinder = FindObjectOfType<Pathfinder>();
     }
 
-    void FindPath()
+    // void FindPath()
+    void RecalculatePath(bool resetPath)
     {
+        Vector2Int coordinates = new Vector2Int();
+
+        if (resetPath)
+        {
+            coordinates = pathfinder.StartCoordinates;
+        }
+        else
+        {
+            coordinates = gridManager.GetCoordinatesFromPosition(transform.position);
+        }
+
+        //stops all coroutines until path is found
+        StopAllCoroutines();
+
         path.Clear();
 
-        // GameObject[] waypoints = GameObject.FindGameObjectsWithTag("Path");
-        GameObject[] tiles = GameObject.FindGameObjectsWithTag("Path");
+        // // GameObject[] waypoints = GameObject.FindGameObjectsWithTag("Path");
+        // GameObject[] tiles = GameObject.FindGameObjectsWithTag("Path");
 
-        // foreach (GameObject waypoint in waypoints)
-        foreach (GameObject tile in tiles)
-        {
-            // path.Add(waypoint.GetComponent<Waypoint>());
-            Waypoint waypoint = tile.GetComponent<Waypoint>();
+        // // foreach (GameObject waypoint in waypoints)
+        // foreach (GameObject tile in tiles)
+        // {
+        //     // path.Add(waypoint.GetComponent<Waypoint>());
+        //     Tile waypoint = tile.GetComponent<Tile>();
 
-            if (waypoint != null)
-            {
-                path.Add(waypoint);
-            }
-        }
+        //     if (waypoint != null)
+        //     {
+        //         path.Add(waypoint);
+        //     }
+        // }
+
+        // after new pathfinder
+        // path = pathfinder.GetNewPath();
+        path = pathfinder.GetNewPath(coordinates);
+
+        StartCoroutine(FollowPath());
     }
 
     void ReturnToStart()
     {
-        transform.position = path[0].transform.position;
+        // transform.position = path[0].transform.position;
+        transform.position = gridManager.GetPositionFromCoordinates(pathfinder.StartCoordinates);
     }
 
     void FinishPath()
@@ -58,12 +88,15 @@ public class EnemyMover : MonoBehaviour
 
     IEnumerator FollowPath()
     {
-        foreach (Waypoint waypoint in path)
+        // foreach (Tile waypoint in path)
+        // for (int i = 0; i < path.Count; i++)
+        // go straight to next path node
+        for (int i = 1; i < path.Count; i++)
         {
             // transform.position = waypoint.transform.position;
 
             Vector3 startPostion = transform.position;
-            Vector3 endPosition = waypoint.transform.position;
+            Vector3 endPosition = gridManager.GetPositionFromCoordinates(path[i].coordinates);
             // always need to update travel position
             float travelPercent = 0f;
 

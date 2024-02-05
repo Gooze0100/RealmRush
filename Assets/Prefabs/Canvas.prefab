@@ -168,7 +168,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Gold: 123456789'
+  m_text: 'Gold: 000000000'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 42ad08b86c042b040a22d85c146f9ce1, type: 2}
   m_sharedMaterial: {fileID: 8162638950335071606, guid: 42ad08b86c042b040a22d85c146f9ce1, type: 2}

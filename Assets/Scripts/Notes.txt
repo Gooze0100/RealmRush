@@ -1,0 +1,46 @@
+Algorithm Used for pathFinding:       Always shortest path        Movement costs       Multiple start or end points      Speed
+Breadth First Search (BFS)                    V                         X                             V                  Medium
+Dijkstra                                      V                         V                             V                  Slow
+A*                                            ?                         V                             X                  Fast
+
+
+
+Navigating Graph is just nodes that are connected with edges
+
+when we found a node that is our destination we just go back with route we found to root check screenshot_8
+this is how Breadth First Search (BFS) Algorithm works
+it just iterates through map until it reaches the way
+also you can change search direction not like clockwise(up,right,down,left) I->F->A, but like F->I->A and check nodes again and find shortest way e.g. screenshot_1
+
+Breadth First Search (BFS) works like:
+1. Choose your search direction;
+2. Add the current node to the tree;
+3. Add the neighbors of the current node to the tree;
+4. Move to the next node in the tree;
+5. If you're not at the goal, go to step 3;
+6. When goal reached we want to record your journey back up the tree;
+7. Reverse the list to get the path in the correct order;
+
+
+Clockwise:
+1. up, right, down, left
+another way to search
+2. down, up, left, right
+
+bonus challenge screenshot_2 and option 1 screenshot_3 and option 2 screenshot_4
+
+Check BroadcastMessage("Dinner") method in Unity it is like parents calling to children about dinner and all children hears it 
+
+Check Overload Methods it is type of Polymorphism = "poly" -> many, "morphism" -> shape, many shapes
+method can have the same name if they have different signatures it is like  
+Instantiate(object,) or 
+Instantiate(object, position, rotation); 
+have same name but with arguments work differently
+
+
+Post processing:
+In camera effects used to change the look of your game
+There is three types in Unity:
+1. Profile - all the effects apply
+2. Volume - contains that profile, there can be many volumes in the world with different effects
+3. Layer - which sits on camera

@@ -10,20 +10,26 @@ using System;
 public class CoordinateLabeler : MonoBehaviour
 {
     [SerializeField] Color defaultColor = Color.white;
-    [SerializeField] Color blockedColor = Color.grey;
+    [SerializeField] Color blockedColor = Color.gray;
+    [SerializeField] Color exploredColor = Color.yellow;
+    [SerializeField] Color pathColor = new Color(1f, 0.5f, 0f);
 
     //grabbing it by a code
     TextMeshPro label;
     //representing vector position with integers
     Vector2Int coordinates = new Vector2Int();
-    Waypoint waypoint;
+    // Waypoint waypoint;
+
+    GridManager gridManager;
 
     void Awake()
     {
+        gridManager = FindObjectOfType<GridManager>();
+
         label = GetComponent<TextMeshPro>();
         label.enabled = false;
         //parent because Waypoint is the root of our object
-        waypoint = GetComponentInParent<Waypoint>();
+        // waypoint = GetComponentInParent<Waypoint>();
         DisplayCoordinates();
     }
 
@@ -51,13 +57,37 @@ public class CoordinateLabeler : MonoBehaviour
 
     void SetLabelColor()
     {
-        if (waypoint.IsPlaceable)
+        // if (waypoint.IsPlaceable)
+        // {
+        //     label.color = defaultColor;
+        // }
+        // else
+        // {
+        //     label.color = blockedColor;
+        // }
+
+        if (gridManager == null) { return; }
+
+        Node node = gridManager.GetNode(coordinates);
+
+        if (node == null) { return; }
+
+        if (!node.isWalkable)
         {
-            label.color = defaultColor;
+            label.color = blockedColor;
+        }
+        // path should be first after walkable because after isExplored path won't be with another color
+        else if (node.isPath)
+        {
+            label.color = pathColor;
+        }
+        else if (node.isExplored)
+        {
+            label.color = exploredColor;
         }
         else
         {
-            label.color = blockedColor;
+            label.color = defaultColor;
         }
     }
 
@@ -67,8 +97,14 @@ public class CoordinateLabeler : MonoBehaviour
         // UnityEditor.EditorSnapSettings.move.x need to divide because positions are roundabouts
         // anything associated with UnityEditor cannot be built in our project if we would like build it it would throw and error
         //if you would move this script into Editor folder it would exclude it and no problem would be found
-        coordinates.x = Mathf.RoundToInt(transform.parent.position.x / UnityEditor.EditorSnapSettings.move.x);
-        coordinates.y = Mathf.RoundToInt(transform.parent.position.z / UnityEditor.EditorSnapSettings.move.z);
+        // coordinates.x = Mathf.RoundToInt(transform.parent.position.x / UnityEditor.EditorSnapSettings.move.x);
+        // coordinates.y = Mathf.RoundToInt(transform.parent.position.z / UnityEditor.EditorSnapSettings.move.z);
+
+        if (gridManager == null) { return; }
+
+        coordinates.x = Mathf.RoundToInt(transform.parent.position.x / gridManager.UnityGridSize);
+        coordinates.y = Mathf.RoundToInt(transform.parent.position.z / gridManager.UnityGridSize);
+
         label.text = coordinates.x + "," + coordinates.y;
     }
 
