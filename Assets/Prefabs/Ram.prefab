@@ -92,10 +92,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5672325927823913723}
-  - component: {fileID: 2004315279754589747}
   - component: {fileID: -3497748097050669428}
   - component: {fileID: 7793148823641480707}
   - component: {fileID: -6322169531991973669}
+  - component: {fileID: -3467205787695735411}
   m_Layer: 0
   m_Name: Ram
   m_TagString: Untagged
@@ -119,20 +119,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2004315279754589747
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5040643765344069697}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 613acf308e61c144abfbeb341d64ccec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  path: []
-  speed: 1
 --- !u!65 &-3497748097050669428
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -158,8 +144,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f9c09bb7ee218e4ba9d6cd265edab0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoints: 5
-  difficultyRamp: 1
+  maxHitPoints: 3
+  difficultyRamp: 5
 --- !u!114 &-6322169531991973669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,3 +160,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goldReward: 25
   goldPenalty: 25
+--- !u!114 &-3467205787695735411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5040643765344069697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 613acf308e61c144abfbeb341d64ccec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  path: []
+  speed: 0.5
